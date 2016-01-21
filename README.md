@@ -1,4 +1,4 @@
-# OnlineSharedPreferencesExample
+# Online Shared Preferences Example
 This Online Shared Preferences sample code demonstrates how to use Onine Shared Preferences lib.
 
 Import by using gradle and start using.
