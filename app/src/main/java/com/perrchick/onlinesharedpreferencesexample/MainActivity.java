@@ -2,11 +2,9 @@ package com.perrchick.onlinesharedpreferencesexample;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.parse.ParseException;
+import com.backendless.exceptions.BackendlessException;
 import com.perrchick.onlinesharedpreferences.OnlineSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
          */
         OnlineSharedPreferences.getOnlineSharedPreferences(this).getString("some key", new OnlineSharedPreferences.GetStringCallback() {
             @Override
-            public void done(String s, ParseException e) {
+            public void done(String s, BackendlessException e) {
                 if (e == null) {
                     ((TextView)findViewById(R.id.txtTitle)).setText(s != null ? s : "");
                 } else {
