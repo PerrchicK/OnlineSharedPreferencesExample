@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
          * (2) Put a string (on version 1.0.0 it saves strings only, you can always export a pojo to a JSON string)
          * (3) Commit asynchronously
          */
-        OnlineSharedPreferences.getOnlineSharedPreferences(this).putString("some key", "some value").commitInBackground();
+        OnlineSharedPreferences.getOnlineSharedPreferences(this).putString("some key", "yo").commitInBackground();
     }
 
     @Override
