@@ -3,9 +3,11 @@ package com.perrchick.onlinesharedpreferencesexample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.exceptions.BackendlessException;
 import com.perrchick.onlinesharedpreferences.OnlineSharedPreferences;
+import com.perrchick.onlinesharedpreferences.SyncedSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +15,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Always synchronized with Firebase server
+        SyncedSharedPreferences.getSyncedSharedPreferences(this, new SyncedSharedPreferences.SyncedSharedPreferencesListener() {
+            @Override
+            public void onSyncedSharedPreferencesChanged(SyncedSharedPreferencesChangeType changeType, String key, String value) {
+                Toast.makeText(getApplicationContext(), "Firebase key value changed (" + changeType + "): <" + key + "," + value + ">", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -25,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
          * (3) Commit asynchronously
          */
         OnlineSharedPreferences.getOnlineSharedPreferences(this).putString("some key", "yo").commitInBackground();
+
+        SyncedSharedPreferences.getSyncedSharedPreferences(this).remove("some key");
     }
 
     @Override
@@ -46,5 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        SyncedSharedPreferences.getSyncedSharedPreferences(this).putString("some key", "yo");
     }
 }
