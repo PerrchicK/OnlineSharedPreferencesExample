@@ -3,7 +3,7 @@ This Online Shared Preferences sample code demonstrates how to use Onine Shared 
 
 **Plugn and Play:** Import easily by editing your project's gradle and start developing.
 
-I find it useful for: Students, POCs, MVPs or small and quick projects.
+I find it useful for: Students, POCs, MVPs, hackathons or any small quick quick-baked project.
 
 ![LOGO](https://github.com/PerrchicK/OnlineSharedPreferencesExample/blob/master/OSP.png)
 
