@@ -2,14 +2,18 @@ package com.perrchick.onlinesharedpreferencesexample;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.exceptions.BackendlessException;
+import com.firebase.client.FirebaseError;
 import com.perrchick.onlinesharedpreferences.OnlineSharedPreferences;
 import com.perrchick.onlinesharedpreferences.SyncedSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,22 +25,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSyncedSharedPreferencesChanged(SyncedSharedPreferencesChangeType changeType, String key, String value) {
                 Toast.makeText(getApplicationContext(), "Firebase key value changed (" + changeType + "): <" + key + "," + value + ">", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "Firebase key value changed (" + changeType + "):\nKey: " + key + "\nValue: " + value);
+            }
+
+            @Override
+            public void onSyncedSharedPreferencesError(FirebaseError firebaseError) {
+                // Reconnect?
             }
         });
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        /* Demonstrated in fluent code:
-         * (1) Get a new instance of OnlineSharedPreferences, pass the context to promise your own data storage
-         * (2) Put a string (on version 1.0.0 it saves strings only, you can always export a pojo to a JSON string)
-         * (3) Commit asynchronously
-         */
-        OnlineSharedPreferences.getOnlineSharedPreferences(this).putString("some key", "yo").commitInBackground();
-
-        SyncedSharedPreferences.getSyncedSharedPreferences(this).remove("some key");
     }
 
     @Override
@@ -52,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done(String s, BackendlessException e) {
                 if (e == null) {
-                    ((TextView)findViewById(R.id.txtTitle)).setText(s != null ? s : "");
+                    ((TextView) findViewById(R.id.txtTitle)).setText(s != null ? s : "");
                 } else {
                     e.printStackTrace();
                 }
@@ -60,5 +56,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         SyncedSharedPreferences.getSyncedSharedPreferences(this).putString("some key", "yo");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        /* Demonstrated in fluent code:
+         * (1) Get a new instance of OnlineSharedPreferences, pass the context to promise your own data storage
+         * (2) Put a string (on version 1.0.0 it saves strings only, you can always export a pojo to a JSON string)
+         * (3) Commit asynchronously
+         */
+        OnlineSharedPreferences.getOnlineSharedPreferences(this).putString("some key", "yo").commitInBackground();
+
+        SyncedSharedPreferences.getSyncedSharedPreferences(this).remove("some key");
     }
 }
