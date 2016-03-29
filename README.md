@@ -26,6 +26,6 @@ Create dependency and download the module to your project, by adding this:
 ```
 dependencies {
     ...
-    compile 'com.github.perrchick:onlinesharedpreferences:1.1.0'
+    compile 'com.github.perrchick:onlinesharedpreferences:2.0.0'
 }
 ```
